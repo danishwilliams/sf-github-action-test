@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-to-test:
+    name: Deploy To Test Env
+    runs-on: ubuntu-latest
+    steps:
+
+    - id: get-changed-files
+      uses: lots0logs/gh-action-get-changed-files@2.1.4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get SF changed files
+      uses: danishwilliams/sfdx-files-github-action
+      with:
+        changed-files: steps.get-changed-files.outputs.all
+        
