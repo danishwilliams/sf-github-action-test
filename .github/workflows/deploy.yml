@@ -31,10 +31,11 @@ jobs:
       with:
         sfdx-auth-url: ${{ secrets.DEV_SANDBOX_AUTH }}
         
-    - name: Deploy
+    - name: Deploy & Test
       if: steps.sf-changed-files.outputs.files-to-deploy && steps.sf-changed-files.outputs.test-files
       run: sfdx force:source:deploy --sourcepath "${{steps.sf-changed-files.outputs.files-to-deploy}}" --testlevel RunSpecifiedTests --runtests "${{steps.sf-changed-files.outputs.test-files}}"
+    
+    - name: Deploy
       if: steps.sf-changed-files.outputs.files-to-deploy && !steps.sf-changed-files.outputs.test-files
       run: sfdx force:source:deploy --sourcepath "${{steps.sf-changed-files.outputs.files-to-deploy}}"
-    
         
