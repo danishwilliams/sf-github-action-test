@@ -1,7 +1,7 @@
 name: Deploy
 
 on:
-  pull_request:
+  push:
     branches:
       - master
 
@@ -17,7 +17,18 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Get SF changed files
+      id: sf-changed-files
       uses: danishwilliams/sfdx-files-github-action@v1
       with:
         changed-files: ${{ steps.get-changed-files.outputs.all }}
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - uses: sfdx-actions/setup-sfdx@v1
+      with:
+        sfdx-auth-url: ${{ secrets.DEV_SANDBOX_AUTH }}
+        
+    - name: Deploy
+      run: sfdx force:source:deploy --sourcepath ${{steps.sf-changed-files.output.files-to-deploy}}
         
