@@ -20,7 +20,9 @@ jobs:
       id: sf-changed-files
       uses: danishwilliams/sfdx-files-github-action@v1.4
       with:
-        changed-files: ${{ steps.get-changed-files.outputs.all }}
+        changed-files: ${{ steps.get-changed-files.outputs.modified }}
+        added-files: ${{ steps.get-changed-files.outputs.added }}
+        renamed-files: ${{ steps.get-changed-files.outputs.renamed }}
 
     - name: Checkout
       uses: actions/checkout@v2
@@ -30,5 +32,5 @@ jobs:
         sfdx-auth-url: ${{ secrets.DEV_SANDBOX_AUTH }}
         
     - name: Deploy
-      run: sfdx force:source:deploy --sourcepath "${{steps.sf-changed-files.outputs.files-to-deploy}}"
+      run: sfdx force:source:deploy --sourcepath "${{steps.sf-changed-files.outputs.files-to-deploy}}" --testlevel RunSpecifiedTests --runtests "${{steps.sf-changed-files.outputs.test-files}}"
         
