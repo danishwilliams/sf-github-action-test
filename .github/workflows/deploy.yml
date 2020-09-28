@@ -18,7 +18,7 @@ jobs:
 
     - name: Get SF changed files
       id: sf-changed-files
-      uses: danishwilliams/sfdx-files-github-action@v1.10
+      uses: danishwilliams/sfdx-files-github-action@v1.11
       with:
         changed-files: ${{ steps.get-changed-files.outputs.modified }}
         added-files: ${{ steps.get-changed-files.outputs.added }}
