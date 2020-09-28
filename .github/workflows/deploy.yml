@@ -17,7 +17,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Get SF changed files
-      uses: danishwilliams/sfdx-files-github-action
+      uses: danishwilliams/sfdx-files-github-action@v1
       with:
         changed-files: steps.get-changed-files.outputs.all
         
