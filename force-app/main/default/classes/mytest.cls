@@ -1,6 +1,6 @@
 @isTest
 public with sharing class mytest {
     @isTest static void doMyTest() {
-        System.assert(1 == 1);
+        System.assert(1 == 2);
     }
 }
